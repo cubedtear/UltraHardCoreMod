@@ -25,7 +25,7 @@ import cpw.mods.fml.relauncher.Side;
  */
 @Mod(name = "UltraHardCore", modid = "UHC", version = "1.0")
 public class ModUHC {
-	
+
 	static Handler events = new Handler();
 
 	@Instance("UHC")
@@ -34,26 +34,32 @@ public class ModUHC {
 	@ServerStarting
 	public void serverStarting(FMLServerStartingEvent e) {
 		e.registerServerCommand(new CommandUHC());
-		if(UHCConfig.SHOW_HEALTH_PLAYER_LIST || UHCConfig.SHOW_HEALTH_SIDEBAR){
-			for(WorldServer s : e.getServer().worldServers){
+		if (UHCConfig.SHOW_HEALTH_PLAYER_LIST || UHCConfig.SHOW_HEALTH_SIDEBAR) {
+			for (WorldServer s : e.getServer().worldServers) {
 				Scoreboard board = s.getScoreboard();
 				ScoreObjective obj = board.getObjective("UHCHealthIndicator");
-				if (obj == null) obj = board.func_96535_a("UHCHealthIndicator", ScoreObjectiveCriteria.field_96638_f);
+				if (obj == null) {
+					obj = board.func_96535_a("UHCHealthIndicator", ScoreObjectiveCriteria.field_96638_f);
+				}
 				obj.setDisplayName("Health");
-				if(UHCConfig.SHOW_HEALTH_PLAYER_LIST) board.func_96530_a(0, obj);
-				if(UHCConfig.SHOW_HEALTH_SIDEBAR) board.func_96530_a(1, obj);
+				if (UHCConfig.SHOW_HEALTH_PLAYER_LIST) {
+					board.func_96530_a(0, obj);
+				}
+				if (UHCConfig.SHOW_HEALTH_SIDEBAR) {
+					board.func_96530_a(1, obj);
+				}
 			}
 		}
 	}
-	
+
 	@PreInit
-	public static void preInit(FMLPreInitializationEvent event){
+	public static void preInit(FMLPreInitializationEvent event) {
 		UHCConfig.init(new Configuration(event.getSuggestedConfigurationFile()));
 	}
 
 	@Init
 	public static void init(FMLInitializationEvent event) {
-		TickRegistry.registerTickHandler(events, Side.SERVER);
-		MinecraftForge.EVENT_BUS.register(events);
+		TickRegistry.registerTickHandler(ModUHC.events, Side.SERVER);
+		MinecraftForge.EVENT_BUS.register(ModUHC.events);
 	}
 }

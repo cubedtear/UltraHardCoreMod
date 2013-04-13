@@ -14,7 +14,7 @@ public class UtilUHC {
 
 	public static boolean setUHCMode(World world, boolean uhc) {
 		boolean before = UtilUHC.isUHC(world);
-		if(uhc == before) return false;
+		if (uhc == before) return false;
 		WorldSavedData wsd = world.perWorldStorage.loadData(null, "UltraHardCoreData");
 		if (wsd instanceof UHCWorldData) {
 			UHCWorldData data = (UHCWorldData) wsd;
@@ -38,12 +38,12 @@ public class UtilUHC {
 	public static void initWorldUHCData(World world) {
 		world.perWorldStorage.setData("UltraHardCoreData", new UHCWorldData());
 	}
-	
-	public static boolean isOP(String username){
+
+	public static boolean isOP(String username) {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().getOps().contains(username);
 	}
-	
-	public static boolean canRunCommand(String username){
+
+	public static boolean canRunCommand(String username) {
 		return UtilUHC.isOP(username) || FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().areCommandsAllowed(username);
 	}
 

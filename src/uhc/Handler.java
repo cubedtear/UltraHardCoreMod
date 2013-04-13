@@ -21,7 +21,7 @@ import cpw.mods.fml.common.TickType;
  * @author aritzh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class Handler implements ITickHandler{
+public class Handler implements ITickHandler {
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
@@ -42,9 +42,15 @@ public class Handler implements ITickHandler{
 			if (tick == TickType.PLAYER) {
 				if (tickData.length == 1 && tickData[0] instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) tickData[0];
-					if (!UtilUHC.isUHC(player.worldObj)) continue;
-					if(UtilUHC.isOP(player.username) && !UHCConfig.BAN_OP) continue;
-					if (!player.getEntityData().hasKey("UHCLifeBefore")) continue;
+					if (!UtilUHC.isUHC(player.worldObj)) {
+						continue;
+					}
+					if (UtilUHC.isOP(player.username) && !UHCConfig.BAN_OP) {
+						continue;
+					}
+					if (!player.getEntityData().hasKey("UHCLifeBefore")) {
+						continue;
+					}
 					byte health = player.getEntityData().getByte("UHCLifeBefore");
 					PotionEffect pEffect = player.getActivePotionEffect(Potion.regeneration);
 					if (pEffect != null) {
@@ -61,14 +67,14 @@ public class Handler implements ITickHandler{
 			}
 		}
 	}
-	
+
 	@ForgeSubscribe
-	public void onEntityDead(LivingDeathEvent event){
-		if(!UHCConfig.DEATH_BAN) return;
-		if(event.entityLiving instanceof EntityPlayerMP){
+	public void onEntityDead(LivingDeathEvent event) {
+		if (!UHCConfig.DEATH_BAN) return;
+		if (event.entityLiving instanceof EntityPlayerMP) {
 			EntityPlayerMP playerEntity = (EntityPlayerMP) event.entity;
 			MinecraftServer mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
-			if(UtilUHC.isUHC(playerEntity.worldObj)){
+			if (UtilUHC.isUHC(playerEntity.worldObj)) {
 				if (mcServer.isSinglePlayer() && playerEntity.username.equals(mcServer.getServerOwner())) {
 					playerEntity.playerNetServerHandler.kickPlayerFromServer("You have died. Game over, man, it\'s game over!\n\nThe world has been deleted ;)");
 					mcServer.deleteWorldAndStopServer();
@@ -80,7 +86,7 @@ public class Handler implements ITickHandler{
 				}
 			}
 		} else {
-			FMLLog.info("Entity " + event.entity.getEntityName() + " died... :-(",(Object[]) null);
+			FMLLog.info("Entity " + event.entity.getEntityName() + " died... :-(", (Object[]) null);
 		}
 	}
 

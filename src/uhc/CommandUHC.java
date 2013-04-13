@@ -36,35 +36,35 @@ public class CommandUHC extends CommandBase {
 		World world = ((EntityPlayer) icommandsender).worldObj;
 		if (astring == null || astring.length == 0) {
 			icommandsender.sendChatToPlayer("");
-			icommandsender.sendChatToPlayer("UltraHardCore Mode is " + (UtilUHC.isUHC(world)?EnumChatFormatting.GREEN + "activated": EnumChatFormatting.RED + "disabled") + EnumChatFormatting.RESET + " in this world");
+			icommandsender.sendChatToPlayer("UltraHardCore Mode is " + (UtilUHC.isUHC(world) ? EnumChatFormatting.GREEN + "activated" : EnumChatFormatting.RED + "disabled") + EnumChatFormatting.RESET + " in this world");
 			icommandsender.sendChatToPlayer(" run" + EnumChatFormatting.AQUA + "/uhc help" + EnumChatFormatting.RESET + " to see how to use this command");
 			return;
 		}
 
 		String arg1 = astring[0];
-		if(astring.length == 1){
-			if(arg1.equals("on") || arg1.equals("true") || arg1.equals("1") || arg1.equals("yes") || arg1.equals("enable")){
-				if(UtilUHC.setUHCMode(world, true)){
+		if (astring.length == 1) {
+			if (arg1.equals("on") || arg1.equals("true") || arg1.equals("1") || arg1.equals("yes") || arg1.equals("enable")) {
+				if (UtilUHC.setUHCMode(world, true)) {
 					icommandsender.sendChatToPlayer(EnumChatFormatting.GREEN + "UltraHardCore Mode is now enabled");
 					return;
 				} else {
 					icommandsender.sendChatToPlayer(EnumChatFormatting.RED + "UHC was already enabled");
 					return;
 				}
-			} else 	if(arg1.equals("off") || arg1.equals("false") || arg1.equals("0") || arg1.equals("no") || arg1.equals("disable")){
-				if(UtilUHC.setUHCMode(world, false)){
+			} else if (arg1.equals("off") || arg1.equals("false") || arg1.equals("0") || arg1.equals("no") || arg1.equals("disable")) {
+				if (UtilUHC.setUHCMode(world, false)) {
 					icommandsender.sendChatToPlayer(EnumChatFormatting.GREEN + "UltraHardCore Mode is now disabled");
 					return;
 				} else {
 					icommandsender.sendChatToPlayer(EnumChatFormatting.RED + "UHC was already disabled");
 					return;
 				}
-			} else if(arg1.equals("toggle")){
+			} else if (arg1.equals("toggle")) {
 				boolean before = UtilUHC.isUHC(world);
 				UtilUHC.setUHCMode(world, !before);
-				icommandsender.sendChatToPlayer(EnumChatFormatting.GREEN + "UltraHardCore Mode is now " + (before?"disabled":"enabled"));
+				icommandsender.sendChatToPlayer(EnumChatFormatting.GREEN + "UltraHardCore Mode is now " + (before ? "disabled" : "enabled"));
 				return;
-			} else if(arg1.equals("help")){
+			} else if (arg1.equals("help")) {
 				icommandsender.sendChatToPlayer("");
 				icommandsender.sendChatToPlayer(EnumChatFormatting.DARK_AQUA + "UHC command help:");
 				icommandsender.sendChatToPlayer(EnumChatFormatting.YELLOW + "Use " + EnumChatFormatting.AQUA + "/uhc on | off | toggle" + EnumChatFormatting.YELLOW + " to change uhc mode to enabled,");
@@ -72,10 +72,10 @@ public class CommandUHC extends CommandBase {
 				icommandsender.sendChatToPlayer(EnumChatFormatting.AQUA + "/uhc heal [playername | @a]" + EnumChatFormatting.YELLOW + " to heal the specified player(s)");
 				return;
 			}
-		} else if(astring.length == 2){
+		} else if (astring.length == 2) {
 			String arg2 = astring[1];
-			if (arg1.equals("heal")){
-				for(EntityPlayerMP player : PlayerSelector.matchPlayers(icommandsender, arg2)){
+			if (arg1.equals("heal")) {
+				for (EntityPlayerMP player : PlayerSelector.matchPlayers(icommandsender, arg2)) {
 					player.heal(player.getMaxHealth());
 					return;
 				}
