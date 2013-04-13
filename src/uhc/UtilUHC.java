@@ -2,6 +2,7 @@ package uhc;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 /**
  * BlockPortableChest
@@ -11,15 +12,15 @@ import net.minecraft.world.WorldSavedData;
  */
 public class UtilUHC {
 
-	public static void setUHCMode(World world, boolean uhc) {
-		if (world.perWorldStorage.loadData(UHCWorldData.class, "UltraHardCoreData") == null) {
-			UtilUHC.initWorldUHCData(world);
-		}
+	public static boolean setUHCMode(World world, boolean uhc) {
+		boolean before = UtilUHC.isUHC(world);
+		if(uhc == before) return false;
 		WorldSavedData wsd = world.perWorldStorage.loadData(null, "UltraHardCoreData");
 		if (wsd instanceof UHCWorldData) {
 			UHCWorldData data = (UHCWorldData) wsd;
 			data.setUHCMode(uhc);
 		}
+		return true;
 	}
 
 	public static boolean isUHC(World world) {
@@ -36,6 +37,14 @@ public class UtilUHC {
 
 	public static void initWorldUHCData(World world) {
 		world.perWorldStorage.setData("UltraHardCoreData", new UHCWorldData());
+	}
+	
+	public static boolean isOP(String username){
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().getOps().contains(username);
+	}
+	
+	public static boolean canRunCommand(String username){
+		return UtilUHC.isOP(username) || FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().areCommandsAllowed(username);
 	}
 
 }
