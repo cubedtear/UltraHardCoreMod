@@ -1,5 +1,9 @@
 package uhc;
 
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.scoreboard.ScoreObjectiveCriteria;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
@@ -30,6 +34,16 @@ public class ModUHC {
 	@ServerStarting
 	public void serverStarting(FMLServerStartingEvent e) {
 		e.registerServerCommand(new CommandUHC());
+		if(UHCConfig.SHOW_HEALTH_PLAYER_LIST || UHCConfig.SHOW_HEALTH_SIDEBAR){
+			for(WorldServer s : e.getServer().worldServers){
+				Scoreboard board = s.getScoreboard();
+				ScoreObjective obj = board.getObjective("UHCHealthIndicator");
+				if (obj == null) obj = board.func_96535_a("UHCHealthIndicator", ScoreObjectiveCriteria.field_96638_f);
+				obj.setDisplayName("Health");
+				if(UHCConfig.SHOW_HEALTH_PLAYER_LIST) board.func_96530_a(0, obj);
+				if(UHCConfig.SHOW_HEALTH_SIDEBAR) board.func_96530_a(1, obj);
+			}
+		}
 	}
 	
 	@PreInit
@@ -42,5 +56,4 @@ public class ModUHC {
 		TickRegistry.registerTickHandler(events, Side.SERVER);
 		MinecraftForge.EVENT_BUS.register(events);
 	}
-
 }
