@@ -1,4 +1,4 @@
-package uhc;
+package aritzh.uhc;
 
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScoreObjectiveCriteria;

@@ -1,4 +1,4 @@
-package uhc;
+package aritzh.uhc;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldSavedData;

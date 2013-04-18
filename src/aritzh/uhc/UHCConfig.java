@@ -1,4 +1,4 @@
-package uhc;
+package aritzh.uhc;
 
 import net.minecraftforge.common.Configuration;
 

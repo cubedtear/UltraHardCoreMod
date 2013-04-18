@@ -1,4 +1,4 @@
-package uhc;
+package aritzh.uhc;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
